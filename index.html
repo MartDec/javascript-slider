@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Slider</title>
+    <script src="slider.js"></script>
+</head>
+<body>
+    <div class="slider">
+        <img src="img/image-1.jpg" alt="">
+        <img src="img/image-2.jpg" alt="">
+        <img src="img/image-3.jpg" alt="">
+        <img src="img/image-4.jpg" alt="">
+    </div>
+    <script>
+        let args = {
+                element: '.slider',
+                width: '600px',
+                height: '350px',
+                nextBtn: '>',
+                prevBtn: '<',
+                transitionDuration: 500
+            },
+            mySlider = new Slider(args)
+    </script>
+</body>
+</html>
