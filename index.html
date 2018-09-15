@@ -9,21 +9,17 @@
 </head>
 <body>
     <div class="slider">
-        <img src="img/image-1.jpg" alt="">
-        <img src="img/image-2.jpg" alt="">
-        <img src="img/image-3.jpg" alt="">
-        <img src="img/image-4.jpg" alt="">
+        <img class="single-slide" src="img/image-1.jpg" alt="">
+        <img class="single-slide" src="img/image-2.jpg" alt="">
+        <img class="single-slide" src="img/image-3.jpg" alt="">
+        <img class="single-slide" src="img/image-4.jpg" alt="">
     </div>
     <script>
         let args = {
-                element: '.slider',
-                width: '600px',
-                height: '350px',
-                nextBtn: '>',
-                prevBtn: '<',
-                transitionDuration: 500
-            },
-            mySlider = new Slider(args)
+            element: '.slider',
+            height: 500
+        },
+        testSlider = new Slider(args)
     </script>
 </body>
 </html>
