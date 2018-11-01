@@ -1,30 +1,36 @@
 class Slider {
 
     constructor (args) {
-        this.slider = document.querySelector(args.element)
-        this.slides = document.querySelectorAll('.' + this.slider.className + ' .single-slide')
+        this.slider = document.querySelector(args.element);
+        this.slides = this.slider.children;
+        this.height = typeof args.height !== String ? args.height + 'px' : args.height;
 
-        let height
-        height = typeof args.height !== String ? args.height + 'px' : args.height
+        this.createSliderStyle();
+    }
 
+    createSliderStyle () {
         this.css(this.slider, {
-            height: height,
+            height: this.height,
             width: '100%',
-            display: 'flex'
-        })
+            position: 'relative',
+            overflowX: 'hidden'
+        });
 
-        this.slides.forEach((slide) => {
+        for (let i = 0; i < this.slides.length; i++) {
+            let slide = this.slides[i];
             this.css(slide, {
-                width: '100%',
+                width: slide.parentElement.clientWidth + 'px',
+                height: this.height,
                 objectFit: 'cover',
-                float: 'right'
+                position: 'absolute',
+                left: (slide.parentElement.clientWidth * i) + 'px'
             })
-        })
+        }
     }
 
     css (elt, rules) {
         for (let rule in rules) {
-            elt.style[rule] = rules[rule]
+            elt.style[rule] = rules[rule];
         }
     }
 
