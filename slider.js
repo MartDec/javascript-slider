@@ -7,9 +7,17 @@ class Slider {
         this.nextBtnElt = args.nextBtn.split(':');
         this.previousBtnElt = args.prevBtn.split(':');
         this.animationDuration = args.animationDuration;
+        this.autoPlay = args.autoPlay;
+        this.autoPlayDuration = args.autoPlayDuration;
 
         this.createSliderStyle();
         this.createSliderControllers();
+
+        if (this.autoPlay === true) {
+            setInterval(() => {
+                this.changeSlide('next');
+            }, this.autoPlayDuration);
+        }
     }
 
     getCurrentSlide () {
