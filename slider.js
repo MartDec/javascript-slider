@@ -6,6 +6,7 @@ class Slider {
         this.height = typeof args.height !== String ? args.height + 'px' : args.height;
         this.nextBtnElt = args.nextBtn.split(':');
         this.previousBtnElt = args.prevBtn.split(':');
+        this.animationDuration = args.animationDuration;
 
         this.createSliderStyle();
         this.createSliderControllers();
@@ -89,7 +90,7 @@ class Slider {
                 objectFit: 'cover',
                 position: 'absolute',
                 left: (slide.parentElement.clientWidth * i) + 'px',
-                transition: 'all 0.5s ease'
+                transition: 'all ' + this.animationDuration + 'ms ease'
             })
         }
     }
@@ -110,7 +111,7 @@ class Slider {
         let prevSlideBtn = this.createPreviousCtrl();
 
         nextSlideBtn.addEventListener('click', () => {
-            this.changeSlide('next');
+                this.changeSlide('next');
         });
         prevSlideBtn.addEventListener('click', () => {
             this.changeSlide('prev');

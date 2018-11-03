@@ -19,14 +19,17 @@
         <img class="single-slide" src="img/image-3.jpg" alt="">
         <img class="single-slide" src="img/image-4.jpg" alt="">
     </div>
+
     <script>
         let args = {
             element: '.slider',
             height: 500,
             nextBtn: 'img:img/next.png',
-            prevBtn: 'img:img/prev.png'
+            prevBtn: 'img:img/prev.png',
+            animationDuration: 500
         },
-        testSlider = new Slider(args)
+
+        mySlider = new Slider(args)
     </script>
 </body>
 </html>
