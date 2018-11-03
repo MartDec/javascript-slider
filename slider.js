@@ -1,6 +1,6 @@
 class Slider {
 
-    constructor (args) {
+    constructor(args) {
         this.slider = document.querySelector(args.element);
         this.slides = this.slider.children;
         this.height = typeof args.height !== String ? args.height + 'px' : args.height;
@@ -20,18 +20,18 @@ class Slider {
         }
     }
 
-    getCurrentSlide () {
+    getCurrentSlide() {
         for (let i = 0; i < this.slides.length; i++) {
             let slide = this.slides[i],
                 slidePos = window.getComputedStyle(slide).left;
-            
+
             if (parseInt(slidePos) === 0) {
                 return slide;
             }
         }
     }
 
-    getNextSlide () {
+    getNextSlide() {
         let currentSlide = this.getCurrentSlide(),
             currentSlidePos = window.getComputedStyle(currentSlide).left;
 
@@ -46,7 +46,7 @@ class Slider {
         }
     }
 
-    getPreviousSlide () {
+    getPreviousSlide() {
         let currentSlide = this.getCurrentSlide(),
             currentSlidePos = window.getComputedStyle(currentSlide).left;
 
@@ -61,7 +61,7 @@ class Slider {
         }
     }
 
-    changeSlide (direction) {
+    changeSlide(direction) {
         let nextSlide = this.getNextSlide(),
             prevSlide = this.getPreviousSlide();
 
@@ -70,19 +70,31 @@ class Slider {
                 slidePos = parseInt(window.getComputedStyle(slide).left),
                 slideWidth = parseInt(window.getComputedStyle(slide).width);
 
-            if (direction === 'next' && typeof nextSlide !== 'undefined') {
-                css(slide, {
-                    left: (slidePos - slideWidth) + 'px'
-                });
-            } else if (direction === 'prev' && typeof prevSlide !== 'undefined') {
-                css(slide, {
-                    left: (slidePos + slideWidth) + 'px'
-                });    
+            if (direction === 'next') {
+                if (typeof nextSlide === 'undefined') {
+                    css(slide, {
+                        left: (slidePos + (slideWidth * (this.slides.length - 1))) + 'px'
+                    });
+                } else {
+                    css(slide, {
+                        left: (slidePos - slideWidth) + 'px'
+                    });
+                }
+            } else if (direction === 'prev') {
+                if (typeof prevSlide === 'undefined') {
+                    css(slide, {
+                        left: (slidePos - (slideWidth * (this.slides.length - 1))) + 'px'
+                    });
+                } else {
+                    css(slide, {
+                        left: (slidePos + slideWidth) + 'px'
+                    });
+                }
             }
-        }        
+        }
     }
 
-    createSliderStyle () {
+    createSliderStyle() {
         css(this.slider, {
             height: this.height,
             width: '100%',
@@ -103,7 +115,7 @@ class Slider {
         }
     }
 
-    createSliderControllers () {
+    createSliderControllers() {
         let ctrlContainer = document.createElement('div');
         ctrlContainer.classList.add('slider-controllers');
 
@@ -119,7 +131,7 @@ class Slider {
         let prevSlideBtn = this.createPreviousCtrl();
 
         nextSlideBtn.addEventListener('click', () => {
-                this.changeSlide('next');
+            this.changeSlide('next');
         });
         prevSlideBtn.addEventListener('click', () => {
             this.changeSlide('prev');
@@ -131,7 +143,7 @@ class Slider {
         this.slider.insertAdjacentElement('afterend', ctrlContainer);
     }
 
-    createNextCtrl () {
+    createNextCtrl() {
         let nextContainer = document.createElement('div');
         nextContainer.classList.add('next-btn');
 
@@ -159,7 +171,7 @@ class Slider {
         return nextContainer;
     }
 
-    createPreviousCtrl () {
+    createPreviousCtrl() {
         let previousContainer = document.createElement('div');
         previousContainer.classList.add('previous-btn');
 
