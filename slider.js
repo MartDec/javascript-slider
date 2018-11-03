@@ -9,21 +9,28 @@ class Slider {
 
         this.createSliderStyle();
         this.createSliderControllers();
-
-        console.log('current slide =>', window.getComputedStyle(this.getCurrentSlide()).width);
     }
-
-    getCurrentSlide () {
+    
+    changeSlide (direction) {
         for (let i = 0; i < this.slides.length; i++) {
-            let slide = this.slides[i];
-            if (parseInt(window.getComputedStyle(slide).left) === 0) {
-                return slide;
+            let slide = this.slides[i],
+                slideLeftPos = window.getComputedStyle(slide).left,
+                slideWidth = window.getComputedStyle(slide).width;
+            
+            if (direction === 'next') {
+                css(slide, {
+                    left: (parseInt(slideLeftPos) - parseInt(slideWidth)) + 'px'
+                })
+            } else if (direction === 'prev') {
+                css(slide, {
+                    left: (parseInt(slideLeftPos) + parseInt(slideWidth)) + 'px'
+                })
             }
         }
     }
 
     createSliderStyle () {
-        this.css(this.slider, {
+        css(this.slider, {
             height: this.height,
             width: '100%',
             position: 'relative',
@@ -32,12 +39,13 @@ class Slider {
 
         for (let i = 0; i < this.slides.length; i++) {
             let slide = this.slides[i];
-            this.css(slide, {
+            css(slide, {
                 width: slide.parentElement.clientWidth + 'px',
                 height: this.height,
                 objectFit: 'cover',
                 position: 'absolute',
-                left: (slide.parentElement.clientWidth * i) + 'px'
+                left: (slide.parentElement.clientWidth * i) + 'px',
+                transition: 'all 0.5s ease'
             })
         }
     }
@@ -46,7 +54,7 @@ class Slider {
         let ctrlContainer = document.createElement('div');
         ctrlContainer.classList.add('slider-controllers');
 
-        this.css(ctrlContainer, {
+        css(ctrlContainer, {
             width: window.getComputedStyle(ctrlContainer).width,
             height: '2.5rem',
             display: 'flex',
@@ -56,6 +64,14 @@ class Slider {
 
         let nextSlideBtn = this.createNextCtrl();
         let prevSlideBtn = this.createPreviousCtrl();
+
+        nextSlideBtn.addEventListener('click', () => {
+            this.changeSlide('next');
+        });
+        prevSlideBtn.addEventListener('click', () => {
+            this.changeSlide('prev');
+        });
+
         ctrlContainer.appendChild(prevSlideBtn);
         ctrlContainer.appendChild(nextSlideBtn);
 
@@ -75,7 +91,7 @@ class Slider {
             nextBtn.setAttribute('src', this.nextBtnElt[1]);
             nextBtn.setAttribute('alt', 'next slide');
 
-            this.css(nextBtn, {
+            css(nextBtn, {
                 height: '2.5rem',
                 marginLeft: '1rem'
             });
@@ -103,7 +119,7 @@ class Slider {
             previousBtn.setAttribute('src', this.previousBtnElt[1]);
             previousBtn.setAttribute('alt', 'previous slide');
 
-            this.css(previousBtn, {
+            css(previousBtn, {
                 height: '2.5rem'
             });
 
@@ -117,10 +133,10 @@ class Slider {
         return previousContainer;
     }
 
-    css (elt, rules) {
-        for (let rule in rules) {
-            elt.style[rule] = rules[rule];
-        }
-    }
+}
 
+let css = (elt, rules) => {
+    for (let rule in rules) {
+        elt.style[rule] = rules[rule];
+    }
 }
