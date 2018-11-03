@@ -10,23 +10,67 @@ class Slider {
         this.createSliderStyle();
         this.createSliderControllers();
     }
-    
-    changeSlide (direction) {
+
+    getCurrentSlide () {
         for (let i = 0; i < this.slides.length; i++) {
             let slide = this.slides[i],
-                slideLeftPos = window.getComputedStyle(slide).left,
-                slideWidth = window.getComputedStyle(slide).width;
+                slidePos = window.getComputedStyle(slide).left;
             
-            if (direction === 'next') {
-                css(slide, {
-                    left: (parseInt(slideLeftPos) - parseInt(slideWidth)) + 'px'
-                })
-            } else if (direction === 'prev') {
-                css(slide, {
-                    left: (parseInt(slideLeftPos) + parseInt(slideWidth)) + 'px'
-                })
+            if (parseInt(slidePos) === 0) {
+                return slide;
             }
         }
+    }
+
+    getNextSlide () {
+        let currentSlide = this.getCurrentSlide(),
+            currentSlidePos = window.getComputedStyle(currentSlide).left;
+
+        for (let i = 0; i < this.slides.length; i++) {
+            let slide = this.slides[i],
+                slidePos = window.getComputedStyle(slide).left,
+                slideWidth = window.getComputedStyle(slide).width;
+
+            if (parseInt(slidePos) === (parseInt(currentSlidePos) + parseInt(slideWidth))) {
+                return slide;
+            }
+        }
+    }
+
+    getPreviousSlide () {
+        let currentSlide = this.getCurrentSlide(),
+            currentSlidePos = window.getComputedStyle(currentSlide).left;
+
+        for (let i = 0; i < this.slides.length; i++) {
+            let slide = this.slides[i],
+                slidePos = window.getComputedStyle(slide).left,
+                slideWidth = window.getComputedStyle(slide).width;
+
+            if (parseInt(slidePos) === (parseInt(currentSlidePos) - parseInt(slideWidth))) {
+                return slide;
+            }
+        }
+    }
+
+    changeSlide (direction) {
+        let nextSlide = this.getNextSlide(),
+            prevSlide = this.getPreviousSlide();
+
+        for (let i = 0; i < this.slides.length; i++) {
+            let slide = this.slides[i],
+                slidePos = parseInt(window.getComputedStyle(slide).left),
+                slideWidth = parseInt(window.getComputedStyle(slide).width);
+
+            if (direction === 'next' && typeof nextSlide !== 'undefined') {
+                css(slide, {
+                    left: (slidePos - slideWidth) + 'px'
+                });
+            } else if (direction === 'prev' && typeof prevSlide !== 'undefined') {
+                css(slide, {
+                    left: (slidePos + slideWidth) + 'px'
+                });    
+            }
+        }        
     }
 
     createSliderStyle () {
