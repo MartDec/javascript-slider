@@ -61,6 +61,9 @@ class Slider {
         }
     }
 
+    /**
+     * animation des slides
+     */
     changeSlide(direction) {
         let nextSlide = this.getNextSlide(),
             prevSlide = this.getPreviousSlide();
@@ -94,6 +97,9 @@ class Slider {
         }
     }
 
+    /**
+     * creation du style du slider
+     */
     createSliderStyle() {
         css(this.slider, {
             height: this.height,
@@ -115,6 +121,9 @@ class Slider {
         }
     }
 
+    /**
+     * ajout des controles dans le DOM
+     */
     createSliderControllers() {
         let ctrlContainer = document.createElement('div');
         ctrlContainer.classList.add('slider-controllers');
@@ -143,6 +152,9 @@ class Slider {
         this.slider.insertAdjacentElement('afterend', ctrlContainer);
     }
 
+    /**
+     * Creation du bouton "next"
+     */
     createNextCtrl() {
         let nextContainer = document.createElement('div');
         nextContainer.classList.add('next-btn');
@@ -171,6 +183,9 @@ class Slider {
         return nextContainer;
     }
 
+    /**
+     * creation du bouton "previous"
+     */
     createPreviousCtrl() {
         let previousContainer = document.createElement('div');
         previousContainer.classList.add('previous-btn');
@@ -200,6 +215,11 @@ class Slider {
 
 }
 
+
+/**
+ * fonction permettant d'ajouter du style
+ * a des elements du DOM
+ */
 let css = (elt, rules) => {
     for (let rule in rules) {
         elt.style[rule] = rules[rule];
